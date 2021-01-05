@@ -50,4 +50,4 @@ def draw(img_path, data):
             verticalalignment="top",
             bbox={"color": "black", "pad": 0},
         )
-    # plt.show()
+    plt.show()

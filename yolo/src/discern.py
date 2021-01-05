@@ -66,7 +66,10 @@ def update_text(text_list, title):
                     if i != u:
                         number = text_list.index(i)
                         # 随机给一个
-                        text_list[number] = (no_text.pop())
+                        try:
+                            text_list[number] = (no_text.pop())
+                        except Exception as e:
+                            ...
 
             results = [i[0] for i in text_list]
         else:

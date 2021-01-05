@@ -18,7 +18,8 @@ from yolo.src.tool import draw
 def run_click(path):
     """方式一"""
     result = discern.text_predict(orientation.location_predict(path), path)
-    draw(path, result)
+    # 画图展示
+    # draw(path, result)
     return result
 
 
@@ -67,7 +68,7 @@ if __name__ == '__main__':
 
     import time
     import random
-    path = "test/image.jpg"
+    path = r"D:\极验文字点选原始图片\24e5b475218c006fb9b6b5048ad30363.jpg"
     start = time.time()
     res = run_click(path)
     print(res)

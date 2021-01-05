@@ -79,7 +79,7 @@ def tag_images(imgs, img_detections):
                 # print('坐标位置为：', [int(i) for i in (x1, y1, box_w, box_h)])
                 results.append(
                     {
-                        "crop": [int(i) for i in (x1, y1, x2, y2)],
+                        "crop": [int(i.item()) if i.item() > 0 else 0 for i in (x1, y1, x2, y2)],
                         "classes": classes[int(cls_pred)]
 
                     }
