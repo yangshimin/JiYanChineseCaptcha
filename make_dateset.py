@@ -76,13 +76,19 @@ def save_single_chinese(image_obj, store_single_dir, points_list, origin_image_p
     for points in points_list:
         single_chinese = list(points.keys())[0]
         point = list(points.values())[0]
+        if not (point and single_chinese):
+            logger.error(f"汉字无法和坐标点想匹配: {origin_image_path}")
+            continue
         single_point_image = image_obj[point[1]:point[3], point[0]:point[2]]
         # cv2.imshow(single_chinese, single_point_image)
         # cv2.waitKey()
-        if not single_point_image:
+        if single_point_image is []:
             logger.error(f"坐标点异常: {origin_image_path}")
+            return
 
-        image_path = os.path.join(store_single_dir, single_chinese, f'{single_chinese}.jpg')
+        # 原图的哈希值
+        image_hash_value = os.path.basename(os.path.splitext(origin_image_path)[0])
+        image_path = os.path.join(store_single_dir, single_chinese, f'{single_chinese}_{image_hash_value}.jpg')
         opencv_write_image(image_path, single_point_image)
 
 
@@ -97,7 +103,7 @@ def get_image_infos(image_path):
             title = info.get("content")
         elif info.get("classes") == "target":
             point_infos[info.get("content")] = info.get("crop")
-    sort_points = [{single_chinese: point_infos[single_chinese]} for single_chinese in title]
+    sort_points = [{single_chinese: point_infos.get(single_chinese, [])} for single_chinese in title]
     return {"title": title, "points": sort_points}
 
 
@@ -116,5 +122,6 @@ def make_dateset(origin_image_path):
 if __name__ == "__main__":
     dir_path = r'D:\极验文字点选原始图片'
     make_dateset(dir_path)
-
+    # infos = get_image_infos(r'D:\极验文字点选原始图片\a79ec9433f2546c00bad84402374f958.jpg')
+    # print(infos)
 
