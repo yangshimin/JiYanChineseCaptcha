@@ -9,31 +9,9 @@ import os
 import cv2
 import numpy as np
 from config import CORNER_IMAGE_DIR, POINT_IMAGE_DIR, SINGLE_CHINESE_IMAGE_DIR
+from utils import opencv_read_image, opencv_write_image
 from yolo.mode_one import run_click
 from logger.get_logger import logger
-
-
-def opencv_read_image(image_path, flags=cv2.IMREAD_COLOR):
-    """
-    imread不能读取含有中文字符的路径
-    flags常用值:
-        cv2.IMREAD_COLOR：默认参数，读入一副彩色图片，忽略alpha通道
-        cv2.IMREAD_GRAYSCALE：读入灰度图片
-        cv2.IMREAD_UNCHANGED：顾名思义，读入完整图片，包括alpha通道
-    参考(ImreadModes): https://docs.opencv.org/4.4.0/d4/da8/group__imgcodecs.html#ga61d9b0126a3e57d9277ac48327799c80
-    """
-    return cv2.imdecode(np.fromfile(image_path, dtype=np.uint8), cv2.IMREAD_COLOR)
-
-
-def opencv_write_image(path, img_obj):
-    """
-    如果以imwrite保存图片, 图片名含有中文则会乱码
-    """
-    dir_path = os.path.split(path)[0]
-    if not os.path.exists(dir_path):
-        os.makedirs(dir_path)
-    _, ext = os.path.splitext(path)
-    cv2.imencode(ext, img_obj)[1].tofile(path)
 
 
 def save_image_corner(image_path, corner_out_dir, title):

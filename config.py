@@ -28,3 +28,6 @@ POINT_IMAGE_DIR = 'sample/image_point'
 
 # 存放汉字类别的单字图片目录
 SINGLE_CHINESE_IMAGE_DIR = 'sample/image_single_chinese'
+
+# 存放annotation xml文件的目录
+ANNOTATION_DIR = 'annotation'
